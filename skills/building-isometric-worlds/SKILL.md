@@ -19,6 +19,11 @@ inverse picking, depth, culling, and directional-data remap. Use
 `creating-2d-game-art` for projection-matched sprites and their production pipeline. Load the active
 engine and language skills for concrete APIs and ownership.
 
+Use `engineering-world-simulations` for authoritative semantic state, simulation cadence, and
+snapshots; use `generating-game-worlds` for generation stages, seeds, causal rules, and validation;
+use `engineering-game-animation` for runtime animation state and transitions. This skill projects and
+inspects their accepted semantic output without taking ownership of those systems.
+
 This skill owns the contract those systems meet: where a world point appears, which surface a pointer
 hits, where a sprite touches the ground, which overlapping element is visible, and which world content
 may affect the viewport.
@@ -154,6 +159,34 @@ Good: orientation is a tested transform used by draw, pick, depth, cull, and dir
 Bad:  rotate the picture 90 degrees and keep the old painter key, hit test, and bounding boxes.
 ```
 
+## Inspect composed worlds through the player view
+
+Inspect semantic world state and its projected result together. Make diagnostic overlays resolve
+stable surface, object, support, footprint, and generator-output IDs from the same snapshot used to
+draw; do not infer meaning back from sprite names or screen positions. Keep generator stage, seed, and
+rule evidence upstream, then carry stable identities through projection so a visible defect can be
+traced to world data, content metadata, or view math.
+
+Review a deliberately small composition matrix before accepting a large world:
+
+- whole-world or region context at minimum supported zoom;
+- normal navigation and editing at typical player zoom;
+- object, seam, picking, and state readability at maximum supported zoom;
+- all supported quarter-turn orientations, including non-square bounds and directional art;
+- flat, minimum, and maximum elevation plus cliffs, slopes, bridges, underground reveals, and stacked
+  selectable surfaces;
+- quiet and dense compositions with tall overhangs, animated extents, map edges, and viewport edges.
+
+Use identical semantic fixtures across orientations and zooms. If the same semantic state projects,
+picks, sorts, or culls differently from the declared view contract, fix this projection boundary. If
+the semantic state itself contains repeated impossible support, adjacency, placement, or generation
+results, fix its owning tile, simulation, content, or generator rule instead of adding sprite offsets
+or orientation-specific exceptions here.
+
+Generated-world screenshots are evidence only when they show the actual player camera and can be
+matched to semantic fixtures, invariants, and stable IDs. A beautiful wide shot cannot prove close
+picking, stacked occlusion, rotation parity, or viewport-edge coverage.
+
 ## Prove parity and boundaries
 
 Automate mathematical proof separately from live visual proof:
@@ -171,10 +204,13 @@ Automate mathematical proof separately from live visual proof:
 - Sweep every viewport edge, supported zoom, maximum visual overhang, and orientation; a tile or object
   whose pixels touch the viewport must not be culled.
 - Assert four quarter-turns return identity and every orientation map round-trips exactly.
+- Capture the composition matrix at minimum, typical, and maximum player zoom for every orientation;
+  link each failure to the semantic fixture and projected IDs that produced it.
 - Inspect the running renderer. A numeric round-trip cannot detect a content-scale, pivot, blend, or
   sprite-bounds mismatch that exists only in the live pipeline.
 
 Deliver the named coordinate spaces, projection and inverse, surface-height/topology contract,
 rounding and hit policy, footpoint convention, ordering model with its assumptions, stacked-surface
-schema, cull derivation, orientation maps, automated fixtures, and unresolved visual sign-offs. The
-evidence and limits behind these defaults are in [sources.md](references/sources.md).
+schema, cull derivation, orientation maps, automated fixtures, multiscale composition evidence, and
+unresolved visual sign-offs. The evidence and limits behind these defaults are in
+[sources.md](references/sources.md).

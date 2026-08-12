@@ -72,6 +72,22 @@ all isometric games.
   [#24805](https://github.com/OpenRCT2/OpenRCT2/issues/24805) records a backside tunnel occlusion/reveal
   failure. Together they support combined viewport-edge, stacked-layer, and orientation/reveal tests;
   open or historical issues are failure reports, not proof of a general solution.
+- Microsoft,
+  [Xbox Accessibility Guideline 109: Object clarity](https://learn.microsoft.com/en-us/xbox/accessibility/xbox-accessibility-guidelines/109),
+  requires important game objects and interactive elements to remain identifiable and recommends
+  assessing clarity in game context. It supports player-view composition checks rather than isolated
+  sprite review. It does not define an isometric zoom set, projection, or sorting algorithm.
+
+## Bounded workflow case study
+
+- AAABench,
+  [world-generation prompt at commit `5072a73`](https://github.com/ukanwat/aaabench/blob/5072a732b3ddd3d3ad95dfef2dc049b187d9d026/PROMPT.md#L834-L941),
+  is a prescriptive Unreal-oriented benchmark prompt that asks builders to inspect generated output,
+  take close views rather than relying on wide shots, and correct repeated defects at the generator.
+  This package borrows only the multiscale inspection and trace-the-producing-rule heuristic, then
+  constrains it with the independent projection, rotation, culling, and object-clarity evidence above.
+  It does not treat AAABench's realism goal, scale, formulas, or production posture as universal
+  authority, and no instructions or assets are copied from its bundled skills.
 
 ## Anonymized first-hand evidence
 
@@ -104,3 +120,8 @@ rather than a universal benchmark or independently accessible reproduction.
 - The rotation pair applies OpenRCT2 #25002 and the anonymized combined cull/order evidence. The remap
   table is algebra derived and round-trip checked for the coordinate convention documented in the
   reference, not copied from an engine.
+- The multiscale composition matrix is this catalog's conservative integration rule. Xbox object
+  clarity supports in-context inspection; OpenRCT2 failures support rotation, stacked-layer, and
+  viewport-edge cases; AAABench contributes a bounded practitioner prompt that contrasts wide shots
+  with close inspection. None establishes that three zoom samples are sufficient for every game, so
+  projects must add camera states and semantic fixtures required by their actual player contract.

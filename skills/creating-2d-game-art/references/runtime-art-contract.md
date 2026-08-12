@@ -16,11 +16,18 @@ Record the contract in a small asset-family specification:
 | Interaction | Selection/collision shapes, sockets, state vocabulary |
 | Animation | Semantic clips, frame order/durations, loop policy, base motion |
 | Variants | Structural differences, cosmetic differences, allowed transforms |
+| Identity and lineage | Stable semantic ID, accepted master, source and rights record |
+| Generation | Tool or model version, seed, parameters, and ordered references when reproducible inputs exist |
 | Export | Stable ID, format, alpha mode, trim, rotation, padding, scales, atlas grouping |
 | Proof | Representative scenes, target devices, automated validation, reviewer |
 
 The brief is an interface between art, design, simulation, and rendering. If a field is unknown,
 prototype it before scaling production.
+
+Treat the accepted master as the frozen editable or raster source approved for derivation. Keep it
+even when generation inputs are recorded: a later tool, model, dependency, or hosted-service version
+may not reproduce the same pixels from a seed. A manifest should make the accepted source and every
+derived runtime product traceable without turning the prompt or current atlas location into identity.
 
 ## Choose a raster contract deliberately
 

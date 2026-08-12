@@ -68,7 +68,11 @@ same-name destination before replacing it so an update cannot retain stale packa
 - `designing-game-levels` — metrics, blockouts, spatial guidance, encounters, and pacing.
 - `designing-games` — player promise, experience hypotheses, core loops, rules, progression, and balance.
 - `designing-player-experience` — onboarding, feedback, HUDs, difficulty options, and accessibility.
+- `designing-systemic-management-games` — binding constraints, indirect control, crises, recovery, and management loops.
 - `engineering-2d-rendering` — render snapshots, spaces, layers, culling, batching, pixels, and proof.
+- `engineering-game-animation` — semantic animation states, transitions, authority, events, and runtime proof.
+- `engineering-world-simulations` — causal world layers, deterministic updates, fidelity, invalidation, and invariants.
+- `generating-game-worlds` — seeded generation pipelines, constraints, repair, seed sweeps, and multiscale proof.
 - `planning-game-production` — prototypes, vertical slices, scope, risks, milestones, and content planning.
 - `playtesting-games` — player-research hypotheses, sessions, measures, analysis, and iteration.
 - `programming-gameplay` — runtime loops, state, input handoff, time, determinism, replays, and saves.
@@ -79,7 +83,10 @@ Start with `designing-games` to define the intended experience and recurring pla
 `planning-game-production` to prove the riskiest assumptions before scaling production, and
 `playtesting-games` to learn from representative players. Add the relevant craft and engineering
 skills for cameras, levels, player experience, runtime architecture, 2D worlds, art, rendering, or
-Axmol.
+Axmol. For simulation-heavy city builders, colony games, factory games, ecosystems, or management
+games, combine `designing-systemic-management-games` with `engineering-world-simulations`; add
+`generating-game-worlds` for procedural maps and `engineering-game-animation` when semantic world
+state must drive characters, vehicles, machinery, or environmental motion.
 
 Use `cpp-patterns` alongside `programming-gameplay` for C++ games and alongside `axmol-patterns` for
 Axmol projects. Other cross-cutting concerns remain in

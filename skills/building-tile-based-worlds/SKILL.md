@@ -180,12 +180,24 @@ the small changed subset rather than copying the entire world.
 
 Have the mutation boundary emit one change set. Derive affected outputs from declared dependencies:
 
+| Derived product | Dependency default | Edit behavior |
+|---|---|---|
+| Local | Exact read offsets or footprint intersections | Invert the reads into a bounded dirty closure |
+| Regional | Chunk, connected component, watershed, or other declared region | Queue and coalesce that named region for a synchronization point |
+| Globally coupled | The result can depend on arbitrary world state | Run a declared global or proven incremental algorithm; never disguise it as a local update |
+
+Classify each product before optimizing it. A local semantic edit must not trigger hidden whole-world
+work through an innocent-looking getter, render request, or per-cell callback. If policy selects a
+full rebuild because the dirty set crossed a measured threshold, expose that selection in metrics
+and run it once, not once per changed cell.
+
 1. Add changed cells, changed edges, released footprints, and claimed footprints.
-2. Expand visual cells using each resolver's reverse read offsets.
-3. Mark every intersecting chunk and every derived cache that consumes those semantics.
-4. Union repeated work by cell, edge, chunk, and cache type.
-5. Rebuild lazily when queried or once at the scheduled synchronization point.
-6. Clear dirty state only after the new product is installed successfully.
+2. Expand local products using each resolver's reverse read offsets or footprint dependencies.
+3. Resolve regional products to their declared chunks, components, or bounded recomputation areas.
+4. Mark every derived cache that consumes the affected semantics.
+5. Union repeated work by cell, edge, region, chunk, and cache type.
+6. Rebuild lazily when queried or once at the scheduled synchronization point.
+7. Clear dirty state only after the new product is installed successfully.
 
 ```text
 # Good — Pair E: accumulate an exact dirty closure and rebuild once.
@@ -199,7 +211,10 @@ for change in plan.changes:
 ```
 
 Measure a crossover for switching from incremental to full rebuild; do not assume incremental is
-always cheaper. Keep correctness independent of that choice by comparing both paths in tests.
+always cheaper. Keep correctness independent of that choice by comparing the installed incremental
+or regional product with a clean full-reference build from the same semantic state. If a product is
+deliberately approximate, declare its error or invariant contract and compare it with a separate
+reference instead of silently weakening equality.
 
 ## Prove the contracts
 
@@ -209,6 +224,8 @@ Add small exhaustive fixtures before large visual maps:
 - verify neighbor count, opposite-direction symmetry where applicable, and border behavior;
 - enumerate every supported connectivity signature and assert missing ones fail visibly;
 - compare local autotile recomputation with a full-map recomputation after each edit;
+- compare every incremental and regional derived-data path with its clean reference across isolated,
+  clustered, chunk-seam, and threshold-crossing edits;
 - rotate asymmetric footprints through every allowed orientation and verify occupancy's two indexes;
 - reject a batch midway and assert the world is unchanged; apply then undo and assert exact equality;
 - assert previewed cells, reasons, and costs equal the committed plan;
@@ -217,15 +234,19 @@ Add small exhaustive fixtures before large visual maps:
 - benchmark sparse edits, large fills, and edits spanning chunk seams before tuning chunk size or the
   incremental/full-rebuild threshold.
 
-Instrument changed semantic cells, expanded dirty cells, touched chunks, rebuild time, and fallback
-rule hits. A fallback hit or full rebuild may be correct; unobserved use makes regressions hard to
-distinguish from intended policy.
+Instrument changed semantic cells, expanded dirty cells, affected regions, touched chunks, rebuild
+time, selected rebuild policy, and fallback-rule hits. A regional or full rebuild may be correct;
+unobserved use makes a hidden world scan or policy regression hard to distinguish from intended work.
 
 ## Keep boundaries clear
 
 - Use `building-isometric-worlds` for isometric projection, picking, elevation display, and depth.
 - Use `engineering-2d-rendering` for batching, atlases, culling, and render-layer implementation.
 - Use `designing-game-cameras-and-controls` for camera movement and input feel.
+- Use `engineering-world-simulations` for simulation cadences and globally coupled fields, networks,
+  stocks, or agent systems; this skill owns their tile-coordinate dependency and dirty-set boundary.
+- Use `generating-game-worlds` for staged seeded world generation, cross-stage invariants, repair, and
+  seed-sweep evaluation; this skill owns the authoritative grid and installed tile products.
 - Use the engine-specific skill for API names and lifetime rules.
 - Treat pathfinding and agent movement as consumers of semantic grid state; do not make them owners
   of terrain, placement, or occupancy truth.
