@@ -13,3 +13,7 @@ $RECYCLE.BIN/
 # Linux desktops
 .directory
 .Trash-*
+
+# Python test artifacts
+__pycache__/
+*.py[cod]
