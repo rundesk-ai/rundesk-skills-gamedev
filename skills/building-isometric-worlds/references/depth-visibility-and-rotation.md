@@ -94,6 +94,22 @@ Its inverses are respectively `(u,v)`, `(W-1-v,u)`, `(W-1-u,H-1-v)`, and
 `(v,H-1-u)`. A different clockwise convention is fine; pin one table and use it everywhere. Test a
 non-square map because square dimensions conceal swapped-axis mistakes.
 
+That table maps **cell indices or cell centres expressed in index coordinates**. Derive other datums from
+their continuous domain instead of reusing `W - 1` blindly. For a point `(p, q)` measured from map corners
+over the closed corner rectangle `[0, W] x [0, H]`, the corresponding clockwise remaps are:
+
+| Orientation | Corner/continuous point `(p, q)` to view `(r, s)` | View domain |
+|---|---|---|
+| 0 | `(p, q)` | `[0,W] x [0,H]` |
+| 1 | `(q, W - p)` | `[0,H] x [0,W]` |
+| 2 | `(W - p, H - q)` | `[0,W] x [0,H]` |
+| 3 | `(H - q, p)` | `[0,H] x [0,W]` |
+
+A cell-local or fractional footpoint first becomes a continuous world point, uses this second table, then
+is decomposed into its view cell and local coordinate under the declared edge tie rule. Equivalently, cell
+centres `(x + 0.5, y + 0.5)` transformed continuously produce the integer-index table after subtracting
+`0.5`. Pin fixtures for both datums so a centre offset cannot leak into corners, slopes, or footpoints.
+
 If the projection consumes view coordinates, the ordinary row key can be derived from `(u, v)` rather
 than maintained as four unrelated formulas. Apply the same orientation to directional edge/corner
 metadata, footprint extents, and sprite selection. Stored simulation data remains in world orientation.

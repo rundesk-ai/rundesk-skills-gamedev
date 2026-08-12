@@ -62,7 +62,8 @@ Place a sprite from an authored logical pivot such as feet, contact point, socke
 from the bitmap center or trimmed rectangle. Keep the pivot stable across frames and variants. Compute
 placement, culling, picking overlays, and dirty expansion from the same transform and metadata contract.
 
-Define draw order as a stable semantic tuple, for example:
+For ordinary 2D scenes whose occlusion is representable as one depth value, define draw order as a
+stable semantic tuple, for example:
 
 ```text
 (pass, depth-from-ground-anchor, local-sublayer, stable-id)
@@ -71,6 +72,10 @@ Define draw order as a stable semantic tuple, for example:
 Use explicit passes for relationships such as ground, ground detail, shadows, entities, overhead, effects,
 and UI. Split one visual into components when it must straddle another pass. Do not globally sort by atlas,
 material, node creation order, or sprite center: those are submission details, not scene meaning.
+
+When `building-isometric-worlds` establishes pairwise occlusion dependencies for tall, multi-cell, or
+stacked content, that partial order owns visibility. Consume its dependency-ordered stream or stable rank;
+do not replace it with a scalar depth tuple. Batch only adjacent compatible commands after that order.
 
 ```text
 Good: semantic order -> stable command stream -> batch adjacent compatible commands.
@@ -88,9 +93,11 @@ sampler, blend, clip/stencil, target, and semantic order. Derive command capacit
 format and backend limits; assert before append and roll to another ordered page before overflow. A larger
 batch is not a win if it changes overlap or crashes at an extreme viewport.
 
-Invalidate the authoritative change footprint plus every dependent neighbor, visual overhang, filter
-kernel, and effect radius. Rebuild only dirty visible chunks or commands. Define one owner for shared chunk
-edges so a boundary cannot be emitted twice or omitted.
+Consume the authoritative semantic/visual closure from the system that derives it. In a tile world,
+`building-tile-based-worlds` owns adjacency, autotile, footprint, and cross-chunk semantic invalidation.
+The renderer expands that emitted closure only for projected sprite overhang, filter kernels, effects,
+visibility caches, and render-cache chunk ownership. Rebuild only dirty visible chunks or commands. Define
+one owner for shared chunk edges so a boundary cannot be emitted twice or omitted.
 
 Use pooling only after churn is proven material. Reset every visible property and detach every external
 reference on release; generation-check reused identities. Prefer compact value command buffers when pooled

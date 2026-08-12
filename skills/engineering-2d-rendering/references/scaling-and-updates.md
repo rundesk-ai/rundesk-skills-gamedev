@@ -94,15 +94,18 @@ size.
 
 ## Invalidate dependency footprints
 
-Define invalidation beside the rule that derives a visual. A changed cell/entity may affect:
+Define invalidation beside the rule that derives it. The gameplay/tile adapter must first emit the complete
+semantic visual closure. For tile worlds, `building-tile-based-worlds` owns adjacency read offsets,
+connectivity/autotile changes, footprints, and cross-chunk semantic closure. The renderer then adds only its
+own dependencies. A changed emitted visual may affect:
 
-- itself and adjacency/transition neighbors;
+- itself as supplied by the authoritative semantic closure;
 - objects whose order relationship crosses it;
 - shadows, glows, particles, and overlays extending beyond it;
 - atlas/cache entries or aggregate summaries derived from it; and
 - filtered output whose kernel samples outside the logical change.
 
-Expand the authoritative change footprint by those dependencies, then intersect it with visible cached
+Expand the supplied closure by those render-only dependencies, then intersect it with visible cached
 chunks. Version cached inputs so a stale entry cannot masquerade as valid merely because its world rectangle
 still matches.
 

@@ -13,7 +13,9 @@ overlap, viewport edges, or rotation.
 
 Use `building-tile-based-worlds` for tile state, neighbourhood rules, autotiling, and world updates.
 Use `engineering-2d-rendering` for frame architecture, batching, texture lifetime, and renderer APIs.
-Use `designing-game-cameras-and-controls` for pan, zoom, framing, input feel, and comfort. Use
+Use `designing-game-cameras-and-controls` for player-facing pan, zoom, framing, focus preservation,
+transition feel, input feel, and comfort. This skill still owns the mathematical quarter-turn transform,
+inverse picking, depth, culling, and directional-data remap. Use
 `creating-2d-game-art` for projection-matched sprites and their production pipeline. Load the active
 engine and language skills for concrete APIs and ownership.
 

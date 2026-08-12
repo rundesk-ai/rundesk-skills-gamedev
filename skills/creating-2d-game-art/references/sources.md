@@ -24,6 +24,11 @@ Derived pair: **good** exports a stable logical base/pivot and explicit shapes; 
 placement and collision from each PNG's current alpha bounds. Tool contracts expose these as
 separate data because image rectangles do not reliably represent gameplay placement.
 
+Catalog conclusion: Aseprite's exported per-frame bounds and pivots make a clip-level union
+derivable. Storing that union is a conservative integration rule for stable culling across animation,
+not an Aseprite requirement. It covers authored frame pixels and offsets only; renderer-owned runtime
+effects add their own bounds.
+
 ## Atlas and sampling contracts
 
 - [libGDX TexturePacker](https://libgdx.com/wiki/tools/texture-packer) documents padding, edge bleed,

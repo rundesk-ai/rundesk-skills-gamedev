@@ -54,6 +54,12 @@ For every gameplay-visible region, retain:
 - semantic layer/occlusion role;
 - animation clip, frame index, duration, and intended loop behavior where applicable.
 
+The art import step also derives a conservative clip-level visual bound as the union of every frame's
+untrimmed authored pixels after applying its pivot and authored visual offset. Store that union with the clip
+metadata and recompute it whenever frames, pivots, offsets, or import settings change. The renderer consumes
+the union, then expands it for runtime shadows, particles, filters, and other effects it owns. It must not
+rescan current frames or guess a global authored overhang.
+
 An atlas packer may rotate or trim pixels only if the loader consumes the corresponding metadata.
 Repacking should change page and UV data without changing semantic IDs or placement.
 

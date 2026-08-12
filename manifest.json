@@ -1,13 +1,14 @@
 {
   "schema": 1,
   "name": "rundesk-skills-gamedev",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Game design and development guidance for Rundesk agents.",
   "skills": [
     {"name": "axmol-patterns", "path": "skills/axmol-patterns"},
     {"name": "building-isometric-worlds", "path": "skills/building-isometric-worlds"},
     {"name": "building-tile-based-worlds", "path": "skills/building-tile-based-worlds"},
     {"name": "creating-2d-game-art", "path": "skills/creating-2d-game-art"},
+    {"name": "cpp-patterns", "path": "skills/cpp-patterns"},
     {"name": "designing-game-cameras-and-controls", "path": "skills/designing-game-cameras-and-controls"},
     {"name": "designing-game-levels", "path": "skills/designing-game-levels"},
     {"name": "designing-games", "path": "skills/designing-games"},

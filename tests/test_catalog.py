@@ -13,6 +13,7 @@ EXPECTED_SKILLS = {
     "building-isometric-worlds",
     "building-tile-based-worlds",
     "creating-2d-game-art",
+    "cpp-patterns",
     "designing-game-cameras-and-controls",
     "designing-game-levels",
     "designing-games",
@@ -73,6 +74,12 @@ class GameCatalogContract(unittest.TestCase):
                 description = frontmatter[1].partition(":")[2].strip()
                 self.assertTrue(description)
                 self.assertLessEqual(len(description), 1024)
+                self.assertNotIn(
+                    ": ",
+                    description,
+                    "an unquoted colon followed by space is invalid YAML plain-scalar content",
+                )
+                self.assertNotIn(" #", description, "YAML would parse this as a comment")
                 self.assertLess(len(page.splitlines()), 500)
                 self.assertTrue((package / "references" / "sources.md").is_file())
                 for forbidden in FORBIDDEN_FILES:

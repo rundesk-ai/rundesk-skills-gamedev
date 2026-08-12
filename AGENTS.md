@@ -22,9 +22,11 @@ assets, call services, hold credentials, or replace current engine and platform 
 
 ## Portfolio boundaries
 
-Keep game-domain judgment here and cross-route generic disciplines instead of copying them:
+Keep game-domain judgment here. This catalog also owns the C++ discipline used by its game projects;
+cross-route the remaining generic disciplines instead of copying them:
 
-- `cpp-patterns` owns C++ correctness, ownership, build targets, sanitizers, and language tooling.
+- `cpp-patterns` in this catalog owns C++ correctness, ownership, build targets, sanitizers, and
+  language tooling.
 - `testing-code` owns automated test design; game skills add domain-specific replays, simulations,
   playtests, and proof scenes.
 - `performance-engineering` owns profiling and benchmark method; game skills define representative

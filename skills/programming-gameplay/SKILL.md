@@ -1,6 +1,6 @@
 ---
 name: programming-gameplay
-description: Use when designing, implementing, reviewing, or debugging engine-agnostic gameplay runtime architecture: technical game loops, fixed-step simulation, input commands, update ordering, entity identity and mutation, gameplay events, deterministic replays, or save boundaries. It supplies timing and state-flow contracts that keep simulation reproducible and presentation responsive. Use the relevant language and engine skills alongside it; do not use it for player/core-loop design, general C++ ownership, profiling, or automated-test methodology alone.
+description: Use when designing, implementing, reviewing, or debugging engine-agnostic gameplay runtime architecture, including technical game loops, fixed-step simulation, input commands, update ordering, entity identity and mutation, gameplay events, deterministic replays, or save boundaries. It supplies timing and state-flow contracts that keep simulation reproducible and presentation responsive. Use the relevant language and engine skills alongside it; do not use it for player/core-loop design, general C++ ownership, profiling, or automated-test methodology alone.
 ---
 
 # Program gameplay

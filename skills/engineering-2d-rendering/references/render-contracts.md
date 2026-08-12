@@ -119,7 +119,7 @@ background -> terrain -> terrain detail -> ground shadows
 -> entities and structures -> overhead/roof -> particles/effects -> world UI -> screen UI
 ```
 
-Within an occluding pass, sort from the shared ground/contact anchor. Godot's documented Y-sort orders only
+Within a simply occluding pass, sort from the shared ground/contact anchor. Godot's documented Y-sort orders only
 peers at the same z-index; this supports coarse semantic bands plus a contact-depth key, not one universal
 Y-sort for the entire scene.
 
@@ -131,6 +131,11 @@ Use a total stable key:
 
 The stable suffix prevents equal-depth items from flickering when container iteration, threads, or pool reuse
 changes. It need not encode gameplay priority; it only makes an otherwise equal visual decision repeatable.
+
+This total key applies only when one scalar depth represents the scene's occlusion. Complex isometric scenes
+can define a partial order from overlapping world footprints and stacked surfaces. When
+`building-isometric-worlds` supplies that order, preserve it and use the tuple only as a stable tie within
+unconstrained groups. Never collapse an isometric dependency graph into `depth` for batching convenience.
 
 When one object must appear both below and above its peers, emit separate components into separate passes.
 Do not alternate magic z offsets until one frame looks right.
