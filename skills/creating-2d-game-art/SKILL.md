@@ -29,11 +29,14 @@ contract.
    logical footprint, base/pivot, optional sockets or hot spots, collision or selection shape, and
    layer role. The opaque image rectangle is rarely the gameplay footprint.
 5. **Build a reusable family.** Produce key states and structural variants before decorative
-   volume. For environment art, validate seams, corners, transitions, occluders, and repeated
-   placement. For actors, keep the base point stable while poses change.
-6. **Export source plus derived data.** Preserve editable source separately from generated sheets.
-   Export stable region names and explicit frame, pivot, trim, and slice metadata. Make atlas
-   rotation, trimming, padding, alpha treatment, sampling, and scale variants declared settings.
+   volume. Track the family in a manifest whose semantic IDs do not depend on filenames, prompts,
+   atlas pages, or generated coordinates. For environment art, validate seams, corners,
+   transitions, occluders, and repeated placement. For actors, keep the base point stable while
+   poses change.
+6. **Freeze accepted masters, then derive runtime data.** Preserve editable or accepted source
+   separately from generated sheets. Export stable region names and explicit original bounds,
+   frame, pivot, trim, clip-union, and slice metadata. Make atlas rotation, trimming, padding, alpha
+   treatment, sampling, and scale variants declared settings.
 7. **Validate the shipped path.** Import the packed result, not a loose source PNG. Inspect all
    target scales, backgrounds, animation transitions, atlas pages, color/accessibility modes, and
    supported devices. Record failures as art-contract defects, not manual runtime offsets.
@@ -87,6 +90,24 @@ Avoid baking dynamic neighbors, transient selection, global atmospheric light, o
 composition into reusable base sprites. Baked information that contradicts adjacent tiles or runtime
 lighting makes a technically valid kit visibly incoherent.
 
+## Make asset families reproducible
+
+Treat generated or procedural output as a proposal to inspect, not as a production family merely
+because it arrived in one image or archive. Approve a representative master in the runtime scene,
+then expand the family under the locked visual and spatial contracts. Reject or regenerate the
+producer rule when the same perspective, seam, light, or proportion defect repeats; hand-fixing every
+instance hides a systemic fault.
+
+Keep a family manifest that maps stable semantic IDs to accepted masters, lineage, runtime meaning,
+export contracts, and validation. Use [the runtime art contract](references/runtime-art-contract.md)
+for the required fields. A seed alone is not reproducibility: preserve the accepted master because
+hosted tools, model revisions, nondeterministic operators, and dependency changes may produce
+different pixels later.
+
+Do not make prompt text, a model's output order, filenames such as `final-3`, or current atlas
+coordinates durable identity. Regenerating, renaming, repacking, or adding a scale variant must not
+change the gameplay-facing ID.
+
 ## Keep animation semantics stable
 
 Name animation states by gameplay meaning and export their frame order and timing. Author strong key
@@ -99,7 +120,8 @@ Bad:  `sheet_final_3.png` relies on alphabetical regions and per-frame centering
 ```
 
 The animation may expose event markers, but gameplay authority remains in the simulation. Route
-runtime timing and state ownership to `programming-gameplay`.
+runtime states, transitions, layering, locomotion authority, and event consumption to
+`engineering-game-animation`; route broader runtime state ownership to `programming-gameplay`.
 
 ## Treat generated art as untrusted source material
 
@@ -108,6 +130,11 @@ required by the project, then inspect every output for perspective drift, incons
 unstable silhouettes, broken transparency, near-duplicate frames, unintended marks, and rights
 constraints. Rebuild pivots, tile edges, states, and metadata explicitly. A contact sheet is useful
 for selection; it is not a runtime atlas contract.
+
+A generated still, turnaround, or apparent sprite sheet is not automatically a production animation
+rig or atlas. It does not establish stable frame identity, clip timing, trim offsets, pivots, sockets,
+directional parity, topology, bones, weights, or loader metadata. Create and validate those contracts
+explicitly after selecting the imagery.
 
 Do not upscale, slice, or pack generated art before selecting a coherent family. Early automation
 multiplies inconsistency and makes later cleanup harder.
@@ -124,6 +151,7 @@ multiplies inconsistency and makes later cleanup harder.
 | Linear filtering samples transparent neighbors | Match padding/bleed and sampler to the asset style | Seams and colored halos appear at scale |
 | All shadows and light are baked | Declare baked versus runtime lighting ownership | Double shadows and contradictory illumination |
 | Generated sheet goes directly to production | Select, normalize, clean, annotate, import, and review | Inconsistent family and missing runtime metadata |
+| Seed or prompt is treated as the master | Preserve the accepted source plus generator record | A later rerun silently changes shipped pixels |
 
 ## Prove completion
 
@@ -135,7 +163,9 @@ Produce evidence from the actual import and representative scene:
 - packed output has no bleed, halo, sampling, alpha, or unexpected rotation defect;
 - important entities and states remain distinguishable at target scales and backgrounds;
 - atlas page, texture format, and memory results fit declared budgets;
-- source, export settings, provenance, and generated outputs are reproducible.
+- the family manifest resolves every shipped semantic ID to an accepted master and validation state;
+- source, export settings, provenance, and deterministic generator inputs are reproducible where the
+  tool contract permits it.
 
 Use `engineering-2d-rendering` for draw order, batching, sampling implementation, and render proof;
 use `performance-engineering` when establishing or diagnosing budgets rather than guessing limits.

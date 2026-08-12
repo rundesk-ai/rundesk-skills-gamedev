@@ -72,6 +72,11 @@ state is color-only. The failure is loss of meaning in motion, visual noise, or 
 
 ## Production pipeline and validation
 
+- [Aseprite: Command Line Interface](https://www.aseprite.org/docs/cli/) documents scripted export of
+  sprite sheets and JSON data plus frame tags, slices, filename formats, trimming, packing, and other
+  declared options. It supports repeatable derivation from an accepted editable master. It does not
+  guarantee byte-identical output across tool versions, operating environments, or external image
+  generators.
 - Jeff Hanna, [The Polished Pipeline](https://media.gdcvault.com/GD_Mag_Archives/GDM_December_2005.pdf),
   *Game Developer*, December 2005, describes keeping source and processed assets separate, validating
   submissions before they consume pipeline resources, returning actionable failures, and avoiding
@@ -85,11 +90,30 @@ state is color-only. The failure is loss of meaning in motion, visual noise, or 
   is Andrew Christophersen's 2019 ArenaNet practitioner session. Its overview identifies brittle
   naming conventions as a failure mode and advocates serialized metadata. This skill applies that
   lesson to stable sprite identities without copying its Maya-specific implementation.
+- W3C,
+  [PROV Overview](https://www.w3.org/TR/prov-overview/), defines provenance as information about the
+  entities, activities, and people involved in producing data or a thing, and describes identifying
+  objects, attribution, and processing steps. This supports recording source and transformation
+  lineage. The skill requires a fit-for-project manifest; it does not prescribe W3C PROV
+  serializations for a game pipeline.
+- AAABench,
+  [world-generation prompt at commit `5072a73`](https://github.com/ukanwat/aaabench/blob/5072a732b3ddd3d3ad95dfef2dc049b187d9d026/PROMPT.md#L875-L902),
+  is a bounded Unreal-oriented workflow case that calls generated output a proposal, requires visual
+  inspection, and recommends fixing repeated defects in the generator. The catalog uses only that
+  inspect-and-correct heuristic. It does not adopt the prompt's realism target, scale assumptions,
+  asset rules, or unbounded production posture as general authority.
 
 Derived pair: **good** keeps editable source, declared export settings, stable metadata, validation,
 and packed derived output; **bad** hand-edits derived atlases or lets validation silently repair
 source. The replacement makes failures reproducible and prevents the next export from undoing a
 hidden fix.
+
+Catalog conclusion: record an accepted master as well as generator version, seed, parameters, and
+ordered references when those inputs exist. The sources establish explicit export inputs,
+transformations, and provenance; they do not establish that a seed reproduces pixels across changing
+models, hosted services, tool versions, or nondeterministic operators. For the same reason, a
+generated sheet is source imagery until the project supplies and validates stable frame IDs, clips,
+timing, pivots, trim offsets, and loader metadata.
 
 ## Limits
 

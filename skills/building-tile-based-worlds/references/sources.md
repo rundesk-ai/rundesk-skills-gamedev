@@ -102,6 +102,13 @@ models, not a requirement to adopt those products.
   Primary engine documentation. `Max Tile Change Count` switches collision generation from
   accumulated incremental changes to a full regeneration. This supports measuring a crossover and
   keeping both incremental and full rebuild paths correct.
+- Guillaume Pierre,
+  [We Built This City on Bits 'n Maps: Four Design Techniques for Simulating Cities in *SimCity* and
+  *Cityscapes: Sim Builder*](https://www.gdcvault.com/play/1034401/We-Built-This-City-on), GDC 2024.
+  The public session description distinguishes maps, networks and globals, agents, and
+  building-to-building connections in responsive city simulations. This is named-practitioner scope
+  evidence that world products have materially different dependency shapes; it does not prescribe
+  the local/regional/global invalidation table or prove a particular incremental algorithm.
 
 ## Good/bad pair traceability
 
@@ -129,3 +136,9 @@ verbatim:
 - Compare incremental output with a full rebuild in tests. Dirty Flag and both engine documents show
   that derived data may be deferred or fully regenerated; equality between paths is the correctness
   oracle independent of optimization policy.
+- Classify a derived product as local, regional, or globally coupled from what it reads, not from the
+  size of the edit that triggered it. Tiled supplies bounded neighborhood reads, Godot and Dirty Flag
+  supply deferred dirty work, Unity supplies an explicit incremental/full crossover, and Pierre's
+  practitioner taxonomy establishes that networks and globals differ from cell maps. The three-class
+  table and requirement to expose any full-world fallback are this catalog's conservative integration
+  rule, not terminology copied from one source.
