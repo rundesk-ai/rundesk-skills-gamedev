@@ -15,9 +15,12 @@ assets, call services, hold credentials, or replace current engine and platform 
    before adding or changing substantive guidance. Use `python-patterns` for
    `tests/test_catalog.py`. For a release, read `RELEASING.md` and use `managing-github` release
    guidance.
-3. Search this catalog before adding a package. Extend the existing owner unless the proposed skill
+3. Use `.github/pull_request_template.md` for every pull request. Preserve its headings and
+   checklists. Mark an item complete only from evidence observed for the exact head commit; explain
+   any item that is not applicable.
+4. Search this catalog before adding a package. Extend the existing owner unless the proposed skill
    has distinct triggers, decisions, workflow, and proof.
-4. Verify engine and version claims against current primary sources. Treat practitioner heuristics
+5. Verify engine and version claims against current primary sources. Treat practitioner heuristics
    as hypotheses to test with the intended players and target hardware, not universal laws.
 
 ## Portfolio boundaries
