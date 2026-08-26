@@ -20,7 +20,8 @@ for organization-wide catalog structure and boundaries.
 
 ## Before you work
 
-1. Read `README.md`, this file, any applicable release documentation, and the complete contents of
+1. Read `docs/BRIEF.md` and `docs/CODEMAP.md` for what this is and where its parts are,
+   then `README.md`, this file, any applicable release documentation, and the complete contents of
    every file you may change. For skill work, also read that package's `SKILL.md` and
    `references/sources.md`.
 2. Load the smallest set of available skills that applies to the task. Use the current Rundesk
@@ -47,6 +48,10 @@ for organization-wide catalog structure and boundaries.
 │   │   └── change-proposal.md
 │   ├── pull_request_template.md
 │   └── workflows/
+├── docs/
+│   ├── README.md                   the index
+│   ├── BRIEF.md                    what this is for, and what it refuses
+│   └── CODEMAP.md                  where each part lives, with counts
 ├── skills/<name>/
 │   ├── SKILL.md
 │   ├── references/sources.md
@@ -155,7 +160,19 @@ scope recorded experience.
 Adding, removing, or renaming a skill updates `manifest.json`, `README.md`, and
 `tests/test_catalog.py` together. Adapted work retains its license and records the exact upstream
 commit and modifications in `THIRD_PARTY_NOTICES.md`. Update `RELEASING.md` when the release process
-changes. Keep all public documentation true in the same change as the behavior or contract it
+changes.
+
+Keep `docs/` in its layout. Only `README.md`, `BRIEF.md`, and `CODEMAP.md` sit at its root; a home is
+added when there is a page for it and never left empty. Use the `structuring-project-docs` skill
+before adding a home, moving a page, or changing the shape of one. Ecosystem root files stay at the
+repository root, where consumers and tooling look for them.
+
+Update `docs/CODEMAP.md` when a count, a layer, or a file it names changes, and `docs/BRIEF.md` only
+when the purpose, audience, or refusals actually move. Keep pages thin: lead with the fact, use a
+table wherever the content is tabular, and never restate a package's own guidance at the repository
+level.
+
+Keep all public documentation true in the same change as the behavior or contract it
 describes.
 
 ## Build, test, and run
