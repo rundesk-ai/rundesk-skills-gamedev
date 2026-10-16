@@ -27,7 +27,7 @@ for organization-wide catalog structure and boundaries.
 2. Load the smallest set of available skills that applies to the task. Use the current Rundesk
    `writing-skills` guidance for skill changes and `managing-github` for pull requests or releases
    when available. Use `researching-topics` for substantive guidance research and
-   `naming-grammar-conventions` for recurring or cross-layer terminology when available. If
+   `naming-software-terms` for recurring or cross-layer terminology when available. If
    governing guidance is unavailable, preserve established conventions and report the limitation;
    do not invent another required skill.
 3. Search this catalog before adding or renaming anything. Reuse the established term, package,
@@ -117,7 +117,7 @@ Keep game-domain judgment here and cross-route generic disciplines instead of co
 - `cpp-patterns` owns C++ correctness, ownership, build targets, sanitizers, and language tooling.
 - `testing-code` owns generic automated test design; game skills add domain-specific replays,
   simulations, playtests, and proof scenes.
-- `performance-engineering` owns profiling and benchmark method; game skills define representative
+- `engineering-performance` owns profiling and benchmark method; game skills define representative
   workloads and frame-sensitive failure surfaces.
 - `creating-design-assets` owns provider-neutral asset creation and prompting; game art skills own
   runtime-facing sprite, tile, atlas, pivot, and readability contracts.

@@ -17,3 +17,10 @@ $RECYCLE.BIN/
 # Python test artifacts
 __pycache__/
 *.py[cod]
+
+# Skills Rundesk adds (managed by Rundesk)
+/.agents/skills/engineering-performance
+/.agents/skills/naming-software-terms
+/.claude/skills/engineering-performance
+/.claude/skills/naming-software-terms
+# End of the skills Rundesk adds
